@@ -13,7 +13,7 @@ import com.google.common.collect.Sets;
 public class GenericUtils {
     public static <_ extends Comparable> Iterable<? extends Iterable<_>> powerSet(Set<_> originalSet) {
         List<Set<_>> sets = new ArrayList<Set<_>>(Sets.powerSet(originalSet)) {{ remove(originalSet); }};
-        List<Set<_>> newSets = new ArrayList<Set<_>>() {{ add(originalSet);}};
+        List<Set<_>> newSets = new ArrayList<>(Arrays.asList(originalSet));
         sets.forEach(set -> Collections2.permutations(set).forEach(s -> newSets.add(new LinkedHashSet<>(s))));
         Collections.sort(newSets, new SortSets<>());
         return newSets;
