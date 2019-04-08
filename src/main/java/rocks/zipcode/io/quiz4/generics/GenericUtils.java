@@ -1,7 +1,9 @@
 package rocks.zipcode.io.quiz4.generics;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
 
 
@@ -11,26 +13,16 @@ import com.google.common.collect.Sets;
 public class GenericUtils {
     public static <_ extends Comparable> Iterable<? extends Iterable<_>> powerSet(Set<_> originalSet) {
         List<Set<_>> sets = new ArrayList<>(Sets.powerSet(originalSet));
-        Set<Set<_>> newSets = new LinkedHashSet<>();
-        int longest = originalSet.size();
+        List<Set<_>> newSets = new ArrayList<>();
         for (Set<_> set : sets) {
-            if (set.size() < longest && set.size() > 1) {
-                newSets.add(swapValues(set));
+            if (set.size() < originalSet.size()) {
+                Collections2.permutations(set).forEach(s -> newSets.add(new LinkedHashSet<>(s)));
             }
         }
-        sets.addAll(newSets);
-        Collections.sort(sets, new SortSets<>());
-        return sets;
-    }
-
-    private static <_ extends Comparable> Set swapValues(Set<_> set) {
-        Set<_> newSet = new LinkedHashSet();
-        Iterator<_> iterator =  set.iterator();
-        _ second = iterator.next();
-        _ first = iterator.next();
-        newSet.add(first);
-        newSet.add(second);
-        return newSet;
+        newSets.forEach(s -> sets.add(new HashSet<>(s)));
+        newSets.add(originalSet);
+        Collections.sort(newSets, new SortSets<>());
+        return newSets;
     }
 
     public static <_ extends Comparable> Iterable<? extends Iterable<_>> powerSet(_... originalSet) {
