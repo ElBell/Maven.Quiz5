@@ -13,12 +13,9 @@ import com.google.common.collect.Sets;
 public class GenericUtils {
     public static <_ extends Comparable> Iterable<? extends Iterable<_>> powerSet(Set<_> originalSet) {
         List<Set<_>> sets = new ArrayList<>(Sets.powerSet(originalSet));
+        sets.remove(originalSet);
         List<Set<_>> newSets = new ArrayList<>();
-        for (Set<_> set : sets) {
-            if (set.size() < originalSet.size()) {
-                Collections2.permutations(set).forEach(s -> newSets.add(new LinkedHashSet<>(s)));
-            }
-        }
+        sets.forEach(set -> Collections2.permutations(set).forEach(s -> newSets.add(new LinkedHashSet<>(s))));
         newSets.forEach(s -> sets.add(new HashSet<>(s)));
         newSets.add(originalSet);
         Collections.sort(newSets, new SortSets<>());
