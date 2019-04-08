@@ -31,12 +31,6 @@
             <artifactId>guava</artifactId>
             <version>27.1-jre</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.common</groupId>
-            <artifactId>google-collect</artifactId>
-            <version>1.0</version>
-        </dependency>
-
 
     </dependencies>
 

@@ -1,7 +1,6 @@
 package rocks.zipcode.io.quiz4.generics;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
